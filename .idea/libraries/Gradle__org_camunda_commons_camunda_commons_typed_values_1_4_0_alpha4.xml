@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.camunda.commons:camunda-commons-typed-values:1.4.0-alpha4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.camunda.commons/camunda-commons-typed-values/1.4.0-alpha4/5363dfed5bfd9e1900b742699fce590b63c28526/camunda-commons-typed-values-1.4.0-alpha4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.camunda.commons/camunda-commons-typed-values/1.4.0-alpha4/f81a1dea9d5ec87e9527385fc228b97de9ca7923/camunda-commons-typed-values-1.4.0-alpha4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

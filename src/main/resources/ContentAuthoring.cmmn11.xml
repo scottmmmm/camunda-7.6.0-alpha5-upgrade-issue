@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vce="http://verint.com" id="Test" targetNamespace="http://www.verint.com" exporter="Camunda Modeler" exporterVersion="1.4.0">
+  <cmmn:case id="ContentAuthoring" name="Content Authoring">
+    <cmmn:casePlanModel id="CasePlanModel_1" name="Content Authoring Process" autoComplete="true">
+      <cmmn:planItem id="PlanItem_NewStage" definitionRef="Stage_New">
+        <cmmn:itemControl id="PlanItemControl_0vqmtpr">
+          <cmmn:manualActivationRule id="ManualActivationRule_0ofw0fy">
+            <cmmn:condition id="Expression_1omkskx">${false}</cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:itemControl>
+      </cmmn:planItem>
+      <cmmn:planItem id="PlanItem_CheckPublish" definitionRef="Stage_CheckPublish">
+        <cmmn:itemControl id="PlanItemControl_06xn2ny">
+          <cmmn:manualActivationRule id="ManualActivationRule_0nos37f">
+            <cmmn:condition id="Expression_0wjupxm">${false}</cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:itemControl>
+        <cmmn:entryCriterion id="EntryCriterion_08kosz6" sentryRef="Sentry_1rswfns" />
+      </cmmn:planItem>
+      <cmmn:sentry id="Sentry_1rswfns">
+        <cmmn:planItemOnPart id="PlanItemOnPart_04gq89e" sourceRef="PlanItem_NewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+        <cmmn:ifPart id="ifPart_df201251-f96c-48ab-bda5-7618e856dc4f">
+          <cmmn:condition id="condition_9b07d3f6-a0e2-4bce-a978-bafbd050a57d"><![CDATA[${_stageCompletion_Stage_New.equals("PlanItem_CheckPublish")}]]></cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_1kwrtib">
+        <cmmn:planItemOnPart id="PlanItemOnPart_0iunp1h" sourceRef="PlanItem_CheckPublish">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+        <cmmn:ifPart id="ifPart_7a733f92-2d9d-4ef9-8c2c-564649cd6639">
+          <cmmn:condition id="condition_2aa82f3b-d4a3-403a-af01-7379583e302d"><![CDATA[${_stageCompletion_Stage_CheckPublish.equals("CasePlanModel_1")}]]></cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:stage id="Stage_New" name="New" autoComplete="false">
+        <cmmn:extensionElements>
+          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_New&#39;, &#39;&#39;)}" />
+        </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_PublishNew" definitionRef="HumanTask_PublishNew">
+          <cmmn:itemControl id="PlanItemControl_1w3gb7n">
+            <cmmn:manualActivationRule id="ManualActivationRule_0ehcqoy">
+              <cmmn:condition id="Expression_14atzsp">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_0oggb1b" definitionRef="HumanTask_12iixnz">
+          <cmmn:itemControl id="PlanItemControl_0df87yw">
+            <cmmn:manualActivationRule id="ManualActivationRule_0ui5wn8">
+              <cmmn:condition id="Expression_10hwpee">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:humanTask id="HumanTask_PublishNew" name="Publish" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_New&#39;, &#39;PlanItem_CheckPublish&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_12iixnz" name="Active Task" />
+      </cmmn:stage>
+      <cmmn:stage id="Stage_CheckPublish" name="Check Publish" autoComplete="true">
+        <cmmn:extensionElements>
+          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_CheckPublish&#39;, &#39;&#39;)}" />
+        </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_GoToPublish" definitionRef="ProcessTask_GoToPublish">
+          <cmmn:itemControl id="PlanItemControl_12srl7f">
+            <cmmn:manualActivationRule id="ManualActivationRule_0vy1kex">
+              <cmmn:condition id="Expression_07fi1qi">${false}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+          <cmmn:entryCriterion id="EntryCriterion_0ca1qkp" sentryRef="Sentry_0sjihw9" />
+        </cmmn:planItem>
+        <cmmn:sentry id="Sentry_0sjihw9">
+          <cmmn:ifPart id="IfPart_0r48uy5">
+            <cmmn:condition id="Expression_04pnhq3">${shouldPublishImmediately}</cmmn:condition>
+          </cmmn:ifPart>
+        </cmmn:sentry>
+        <cmmn:processTask id="ProcessTask_GoToPublish" name="GoTo Publish" processRef="No_Op">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_CheckPublish&#39;, &#39;CasePlanModel_1&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:processTask>
+      </cmmn:stage>
+      <cmmn:exitCriterion id="ExitCriterion_01dcayn" sentryRef="Sentry_1kwrtib" />
+    </cmmn:casePlanModel>
+  </cmmn:case>
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram id="_5a66685b-5f57-4e2f-b1d1-acca4fae04b2">
+      <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
+      <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="CasePlanModel_1">
+        <dc:Bounds x="322" y="361" width="1457" height="488" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_004dsfe_di" cmmnElementRef="PlanItem_NewStage">
+        <dc:Bounds x="417.0151098901099" y="517" width="430.9848901098901" height="189" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_05uwxg8_di" cmmnElementRef="PlanItem_PublishNew">
+        <dc:Bounds x="636" y="563" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_10sa6fk_di" cmmnElementRef="PlanItem_CheckPublish">
+        <dc:Bounds x="1100" y="509" width="384" height="226" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_08n6k31_di" cmmnElementRef="PlanItem_GoToPublish">
+        <dc:Bounds x="1238" y="557" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_0iunp1h_di" cmmnElementRef="PlanItemOnPart_0iunp1h" targetCMMNElementRef="ExitCriterion_01dcayn" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="1484" y="597" />
+        <di:waypoint xsi:type="dc:Point" x="1627" y="597" />
+        <di:waypoint xsi:type="dc:Point" x="1627" y="567" />
+        <di:waypoint xsi:type="dc:Point" x="1769" y="567" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="1554" y="568" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="EntryCriterion_08kosz6_di" cmmnElementRef="EntryCriterion_08kosz6">
+        <dc:Bounds x="1090" y="580" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_04gq89e_di" cmmnElementRef="PlanItemOnPart_04gq89e" targetCMMNElementRef="EntryCriterion_08kosz6" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="848" y="595" />
+        <di:waypoint xsi:type="dc:Point" x="903" y="595" />
+        <di:waypoint xsi:type="dc:Point" x="1090" y="594" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="913" y="576" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="ExitCriterion_01dcayn_di" cmmnElementRef="ExitCriterion_01dcayn">
+        <dc:Bounds x="1769" y="551" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_0ca1qkp_di" cmmnElementRef="EntryCriterion_0ca1qkp">
+        <dc:Bounds x="1228" y="588" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1dohhni_di" cmmnElementRef="PlanItem_0oggb1b">
+        <dc:Bounds x="485" y="563" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+    </cmmndi:CMMNDiagram>
+  </cmmndi:CMMNDI>
+</cmmn:definitions>

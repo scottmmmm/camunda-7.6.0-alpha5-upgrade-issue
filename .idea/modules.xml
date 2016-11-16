@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue.iml" filepath="$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue_main.iml" filepath="$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue_main.iml" group="camunda-upgrade-issue" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue_test.iml" filepath="$PROJECT_DIR$/.idea/modules/camunda-upgrade-issue_test.iml" group="camunda-upgrade-issue" />
+    </modules>
+  </component>
+</project>
