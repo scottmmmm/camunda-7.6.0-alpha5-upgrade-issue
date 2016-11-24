@@ -47,36 +47,36 @@
       <cmmn:sentry id="Sentry_1anitk7">
         <cmmn:planItemOnPart id="PlanItemOnPart_131phwc" sourceRef="PlanItem_ReviewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_7366eb19-7a99-4a9a-89b4-f12040316a3c">
-          <cmmn:condition id="condition_63ffe43f-f188-429d-b483-6e5ad89baf58"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ManagerReview")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_2b78fc1b-bed3-4edf-b1cb-12ed90a2fa77">
+          <cmmn:condition id="condition_e8b829a4-c754-43a6-ad10-52a29e2ec869"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ManagerReview")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:sentry id="Sentry_0eoj54m">
         <cmmn:planItemOnPart id="PlanItemOnPart_10hp6v4" sourceRef="PlanItem_ReviewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_5e50fc01-1fe2-46ff-bc70-72fd86a722fe">
-          <cmmn:condition id="condition_48e30e94-c7f4-440f-b2df-e1efbe084749"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_0208e97d-f640-4554-840b-ff7dbcfbf2ab">
+          <cmmn:condition id="condition_616cc987-6c24-46d3-9893-1fc38e28a9b9"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:sentry id="Sentry_1cqds09">
         <cmmn:planItemOnPart id="PlanItemOnPart_0k6j5k3" sourceRef="PlanItem_ManagerReview">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_e60853a5-fd16-4854-bb90-df51a1ad2d75">
-          <cmmn:condition id="condition_e3d3e437-c7b8-42b5-b8cf-bc575f5ca842"><![CDATA[${_stageCompletion_Stage_ManagerReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_b9a03fb4-8beb-4df6-9638-f38887a8e3be">
+          <cmmn:condition id="condition_8fb6bee7-83c6-4dc5-84b9-e35c4da80b9b"><![CDATA[${_stageCompletion_Stage_ManagerReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:sentry id="Sentry_17ha6sb">
         <cmmn:planItemOnPart id="PlanItemOnPart_1mm6c2p" sourceRef="PlanItem_ReworkStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_ab1f8ed7-b8b6-4a2e-ba25-c9f611fd8e6e">
-          <cmmn:condition id="condition_300de777-dc31-474c-8326-5b1da9918b04"><![CDATA[${_stageCompletion_Stage_Rework.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_4ce69482-253e-4b1e-9d11-bee9520293a4">
+          <cmmn:condition id="condition_f7788bb8-d225-421d-9ccb-41752a12c36c"><![CDATA[${_stageCompletion_Stage_Rework.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:sentry id="Sentry_0sd3aks">
         <cmmn:planItemOnPart id="PlanItemOnPart_1xkmdg3" sourceRef="PlanItem_NewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_23114e8a-dd98-4887-965e-0571388ddb76">
-          <cmmn:condition id="condition_714fe970-e0ed-4e11-8ebe-e5ca773447d7"><![CDATA[${_stageCompletion_Stage_New.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_3849eb79-88e6-4365-a116-3d1798b89c20">
+          <cmmn:condition id="condition_1eeefc8c-ae5c-4152-8442-958170507455"><![CDATA[${_stageCompletion_Stage_New.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
       <cmmn:stage id="Stage_ManagerReview" name="Manager Review" autoComplete="true">
@@ -184,6 +184,30 @@
             </cmmn:manualActivationRule>
           </cmmn:itemControl>
         </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_EditInRework" definitionRef="HumanTask_EditToRework">
+          <cmmn:itemControl id="PlanItemControl_0eqckhh">
+            <cmmn:repetitionRule id="RepetitionRule_0hmpkhx">
+              <cmmn:condition id="Expression_05iovvb">${true}</cmmn:condition>
+            </cmmn:repetitionRule>
+            <cmmn:manualActivationRule id="ManualActivationRule_1ygeock">
+              <cmmn:condition id="Expression_0r8g7zj">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_DeleteRework" definitionRef="HumanTask_DeleteRework">
+          <cmmn:itemControl id="PlanItemControl_1vvwmca">
+            <cmmn:manualActivationRule id="ManualActivationRule_1i6mwbl">
+              <cmmn:condition id="Expression_0h9gn9r">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_PublishRework" definitionRef="HumanTask_PublishRework">
+          <cmmn:itemControl id="PlanItemControl_0sdqio1">
+            <cmmn:manualActivationRule id="ManualActivationRule_0egsan9">
+              <cmmn:condition id="Expression_0j442j4">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
         <cmmn:planItem id="PlanItem_SubmitRework" definitionRef="HumanTask_SubmitRework">
           <cmmn:itemControl id="PlanItemControl_0prxzq8">
             <cmmn:manualActivationRule id="ManualActivationRule_02etda2">
@@ -192,7 +216,18 @@
           </cmmn:itemControl>
         </cmmn:planItem>
         <cmmn:planItem id="PlanItem_ReworkMilestone" definitionRef="Milestone_Rework" />
-        <cmmn:humanTask id="HumanTask_Rework" name="Rework" camunda:candidateGroups="${&#34;johnny&#34;}" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ViewContentAction" />
+        <cmmn:humanTask id="HumanTask_Rework" name="Rework" camunda:candidateGroups="${&#34;jbloggs&#34;}" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ViewContentAction" />
+        <cmmn:humanTask id="HumanTask_EditToRework" name="Edit" vce:displayOrder="2" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.EditContentAction" />
+        <cmmn:humanTask id="HumanTask_DeleteRework" name="Delete" vce:displayOrder="1" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.DeleteContentAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_PublishRework" name="Publish" vce:displayOrder="4" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
         <cmmn:humanTask id="HumanTask_SubmitRework" name="Submit For Review" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
           <cmmn:extensionElements>
             <vce:stageCompletionTask />
@@ -299,6 +334,18 @@
         <dc:Bounds x="49" y="627" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0t0vcvh_di" cmmnElementRef="PlanItem_EditInRework">
+        <dc:Bounds x="158" y="700" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0qwtlac_di" cmmnElementRef="PlanItem_DeleteRework">
+        <dc:Bounds x="271" y="786" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0vuxq9p_di" cmmnElementRef="PlanItem_PublishRework">
+        <dc:Bounds x="271" y="608" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
       <cmmndi:CMMNShape id="PlanItem_0hevtnl_di" cmmnElementRef="PlanItem_SubmitRework">
         <dc:Bounds x="271" y="700" width="100" height="80" />
         <cmmndi:CMMNLabel />
@@ -312,7 +359,7 @@
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNEdge id="PlanItemOnPart_0k6j5k3_di" cmmnElementRef="PlanItemOnPart_0k6j5k3" targetCMMNElementRef="EntryCriterion_06rvkgv" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="1344" y="411" />
+        <di:waypoint xsi:type="dc:Point" x="1369" y="357" />
         <di:waypoint xsi:type="dc:Point" x="1478" y="411" />
         <di:waypoint xsi:type="dc:Point" x="1478" y="934" />
         <di:waypoint xsi:type="dc:Point" x="-70" y="934" />
@@ -335,7 +382,7 @@
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNEdge id="PlanItemOnPart_10hp6v4_di" cmmnElementRef="PlanItemOnPart_10hp6v4" targetCMMNElementRef="EntryCriterion_0e6oe5f" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="875" y="395" />
+        <di:waypoint xsi:type="dc:Point" x="896" y="353" />
         <di:waypoint xsi:type="dc:Point" x="970" y="395" />
         <di:waypoint xsi:type="dc:Point" x="970" y="891" />
         <di:waypoint xsi:type="dc:Point" x="-33" y="891" />
@@ -350,7 +397,7 @@
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNEdge id="PlanItemOnPart_131phwc_di" cmmnElementRef="PlanItemOnPart_131phwc" targetCMMNElementRef="EntryCriterion_11us4mi" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="875" y="306" />
+        <di:waypoint xsi:type="dc:Point" x="896" y="353" />
         <di:waypoint xsi:type="dc:Point" x="978" y="305" />
         <cmmndi:CMMNLabel>
           <dc:Bounds x="885" y="281" width="90" height="20" />
@@ -361,7 +408,7 @@
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNEdge id="PlanItemOnPart_1mm6c2p_di" cmmnElementRef="PlanItemOnPart_1mm6c2p" targetCMMNElementRef="EntryCriterion_0w98wp7" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="371" y="740" />
+        <di:waypoint xsi:type="dc:Point" x="404" y="730" />
         <di:waypoint xsi:type="dc:Point" x="619" y="740" />
         <di:waypoint xsi:type="dc:Point" x="619" y="560" />
         <cmmndi:CMMNLabel>
@@ -373,7 +420,7 @@
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNEdge id="PlanItemOnPart_1xkmdg3_di" cmmnElementRef="PlanItemOnPart_1xkmdg3" targetCMMNElementRef="EntryCriterion_0y8bda2" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="398" y="39" />
+        <di:waypoint xsi:type="dc:Point" x="431" y="38" />
         <di:waypoint xsi:type="dc:Point" x="677" y="39" />
         <di:waypoint xsi:type="dc:Point" x="677" y="146" />
         <cmmndi:CMMNLabel>
