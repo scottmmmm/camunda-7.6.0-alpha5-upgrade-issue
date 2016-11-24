@@ -1,6 +1,8 @@
 buildscript {
     repositories {
+        maven { url "https://app.camunda.com/nexus/content/groups/public" }
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE"
@@ -11,7 +13,6 @@ buildscript {
 group 'com.verint.bassworkflow'
 version '1.0-SNAPSHOT'
 ext.ARTIFACT_NAME = 'camunda-upgrade-issue'
-
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
@@ -30,7 +31,7 @@ ext.tomcatVersion = '8.0.36'
 
 dependencyManagement {
     imports {
-        mavenBom 'org.camunda.bpm:camunda-bom:7.6.0-alpha5'
+        mavenBom 'org.camunda.bpm:camunda-bom:7.6.0-alpha6'
     }
 }
 

@@ -2,6 +2,17 @@
 <cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/cmmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:vce="http://verint.com" id="Test" targetNamespace="http://www.verint.com" exporter="Camunda Modeler" exporterVersion="1.4.0">
   <cmmn:case id="ContentAuthoring" name="Content Authoring">
     <cmmn:casePlanModel id="CasePlanModel_1" name="Content Authoring Process" autoComplete="true">
+      <cmmn:planItem id="PlanItem_ManagerReview" definitionRef="Stage_ManagerReview">
+        <cmmn:itemControl id="PlanItemControl_18mnkym">
+          <cmmn:repetitionRule id="RepetitionRule_03ynr9v">
+            <cmmn:condition id="Expression_08q06zn">${true}</cmmn:condition>
+          </cmmn:repetitionRule>
+          <cmmn:manualActivationRule id="ManualActivationRule_1m7pv5j">
+            <cmmn:condition id="Expression_0rcyuee">${false}</cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:itemControl>
+        <cmmn:entryCriterion id="EntryCriterion_11us4mi" sentryRef="Sentry_1anitk7" />
+      </cmmn:planItem>
       <cmmn:planItem id="PlanItem_NewStage" definitionRef="Stage_New">
         <cmmn:itemControl id="PlanItemControl_0vqmtpr">
           <cmmn:manualActivationRule id="ManualActivationRule_0ofw0fy">
@@ -9,32 +20,116 @@
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
       </cmmn:planItem>
-      <cmmn:planItem id="PlanItem_CheckPublish" definitionRef="Stage_CheckPublish">
-        <cmmn:itemControl id="PlanItemControl_06xn2ny">
-          <cmmn:manualActivationRule id="ManualActivationRule_0nos37f">
-            <cmmn:condition id="Expression_0wjupxm">${false}</cmmn:condition>
+      <cmmn:planItem id="PlanItem_ReworkStage" definitionRef="Stage_Rework">
+        <cmmn:itemControl id="PlanItemControl_0bqoms0">
+          <cmmn:repetitionRule id="RepetitionRule_0qyr73d">
+            <cmmn:condition id="Expression_1wbvqrp">${true}</cmmn:condition>
+          </cmmn:repetitionRule>
+          <cmmn:manualActivationRule id="ManualActivationRule_1mb0oxu">
+            <cmmn:condition id="Expression_0q36ypy">${false}</cmmn:condition>
           </cmmn:manualActivationRule>
         </cmmn:itemControl>
-        <cmmn:entryCriterion id="EntryCriterion_08kosz6" sentryRef="Sentry_1rswfns" />
+        <cmmn:entryCriterion id="EntryCriterion_0e6oe5f" sentryRef="Sentry_0eoj54m" />
+        <cmmn:entryCriterion id="EntryCriterion_06rvkgv" sentryRef="Sentry_1cqds09" />
       </cmmn:planItem>
-      <cmmn:sentry id="Sentry_1rswfns">
-        <cmmn:planItemOnPart id="PlanItemOnPart_04gq89e" sourceRef="PlanItem_NewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+      <cmmn:planItem id="PlanItem_ReviewStage" definitionRef="Stage_ContentReview">
+        <cmmn:itemControl id="PlanItemControl_0z5eonk">
+          <cmmn:repetitionRule id="RepetitionRule_1dawqqr">
+            <cmmn:condition id="Expression_04f6ang">${true}</cmmn:condition>
+          </cmmn:repetitionRule>
+          <cmmn:manualActivationRule id="ManualActivationRule_1j5j60h">
+            <cmmn:condition id="Expression_1wsdolx">${false}</cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:itemControl>
+        <cmmn:entryCriterion id="EntryCriterion_0w98wp7" sentryRef="Sentry_17ha6sb" />
+        <cmmn:entryCriterion id="EntryCriterion_0y8bda2" sentryRef="Sentry_0sd3aks" />
+      </cmmn:planItem>
+      <cmmn:sentry id="Sentry_1anitk7">
+        <cmmn:planItemOnPart id="PlanItemOnPart_131phwc" sourceRef="PlanItem_ReviewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_df201251-f96c-48ab-bda5-7618e856dc4f">
-          <cmmn:condition id="condition_9b07d3f6-a0e2-4bce-a978-bafbd050a57d"><![CDATA[${_stageCompletion_Stage_New.equals("PlanItem_CheckPublish")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_7366eb19-7a99-4a9a-89b4-f12040316a3c">
+          <cmmn:condition id="condition_63ffe43f-f188-429d-b483-6e5ad89baf58"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ManagerReview")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
-      <cmmn:sentry id="Sentry_1kwrtib">
-        <cmmn:planItemOnPart id="PlanItemOnPart_0iunp1h" sourceRef="PlanItem_CheckPublish">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+      <cmmn:sentry id="Sentry_0eoj54m">
+        <cmmn:planItemOnPart id="PlanItemOnPart_10hp6v4" sourceRef="PlanItem_ReviewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
 </cmmn:planItemOnPart>
-        <cmmn:ifPart id="ifPart_7a733f92-2d9d-4ef9-8c2c-564649cd6639">
-          <cmmn:condition id="condition_2aa82f3b-d4a3-403a-af01-7379583e302d"><![CDATA[${_stageCompletion_Stage_CheckPublish.equals("CasePlanModel_1")}]]></cmmn:condition>
+        <cmmn:ifPart id="ifPart_5e50fc01-1fe2-46ff-bc70-72fd86a722fe">
+          <cmmn:condition id="condition_48e30e94-c7f4-440f-b2df-e1efbe084749"><![CDATA[${_stageCompletion_Stage_ContentReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
         </cmmn:ifPart>
       </cmmn:sentry>
+      <cmmn:sentry id="Sentry_1cqds09">
+        <cmmn:planItemOnPart id="PlanItemOnPart_0k6j5k3" sourceRef="PlanItem_ManagerReview">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+        <cmmn:ifPart id="ifPart_e60853a5-fd16-4854-bb90-df51a1ad2d75">
+          <cmmn:condition id="condition_e3d3e437-c7b8-42b5-b8cf-bc575f5ca842"><![CDATA[${_stageCompletion_Stage_ManagerReview.equals("PlanItem_ReworkStage")}]]></cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_17ha6sb">
+        <cmmn:planItemOnPart id="PlanItemOnPart_1mm6c2p" sourceRef="PlanItem_ReworkStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+        <cmmn:ifPart id="ifPart_ab1f8ed7-b8b6-4a2e-ba25-c9f611fd8e6e">
+          <cmmn:condition id="condition_300de777-dc31-474c-8326-5b1da9918b04"><![CDATA[${_stageCompletion_Stage_Rework.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:sentry id="Sentry_0sd3aks">
+        <cmmn:planItemOnPart id="PlanItemOnPart_1xkmdg3" sourceRef="PlanItem_NewStage">        <cmmn:standardEvent>complete</cmmn:standardEvent>
+</cmmn:planItemOnPart>
+        <cmmn:ifPart id="ifPart_23114e8a-dd98-4887-965e-0571388ddb76">
+          <cmmn:condition id="condition_714fe970-e0ed-4e11-8ebe-e5ca773447d7"><![CDATA[${_stageCompletion_Stage_New.equals("PlanItem_ReviewStage")}]]></cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+      <cmmn:stage id="Stage_ManagerReview" name="Manager Review" autoComplete="true">
+        <cmmn:extensionElements>
+          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_ManagerReview&#39;, &#39;&#39;)}" />
+        </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_ManagerReview_Reject" definitionRef="HumanTask_ManagerReview_Reject">
+          <cmmn:itemControl id="PlanItemControl_0nbyu0t">
+            <cmmn:manualActivationRule id="ManualActivationRule_0k6vw55">
+              <cmmn:condition id="Expression_1vfbhl9">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ManagerReview_Approve" definitionRef="HumanTask_ManagerReview_Approve">
+          <cmmn:itemControl id="PlanItemControl_09gn5qy">
+            <cmmn:manualActivationRule id="ManualActivationRule_0byhhlz">
+              <cmmn:condition id="Expression_1h6ud3c">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ManagerReview_Review" definitionRef="HumanTask_ManagerReview_Review">
+          <cmmn:itemControl id="PlanItemControl_1jmgos4">
+            <cmmn:manualActivationRule id="ManualActivationRule_1nnyx9j">
+              <cmmn:condition id="Expression_140cn5u">${false}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ManagerReviewMilestone" definitionRef="Milestone_ManagerReview" />
+        <cmmn:humanTask id="HumanTask_ManagerReview_Reject" name="Reject" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_ManagerReview&#39;, &#39;PlanItem_ReworkStage&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_ManagerReview_Approve" name="Approve" vce:displayOrder="4" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_ManagerReview_Review" name="Review" camunda:candidateGroups="QueueED:Manager Review Queue" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ViewContentAction" />
+        <cmmn:milestone id="Milestone_ManagerReview" name="Manager Review" />
+      </cmmn:stage>
       <cmmn:stage id="Stage_New" name="New" autoComplete="false">
         <cmmn:extensionElements>
           <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_New&#39;, &#39;&#39;)}" />
         </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_CreateContent" definitionRef="HumanTask_CreateContent">
+          <cmmn:itemControl id="PlanItemControl_1le8f77">
+            <cmmn:manualActivationRule id="ManualActivationRule_03kaypq">
+              <cmmn:condition id="Expression_09sv2yf">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
         <cmmn:planItem id="PlanItem_PublishNew" definitionRef="HumanTask_PublishNew">
           <cmmn:itemControl id="PlanItemControl_1w3gb7n">
             <cmmn:manualActivationRule id="ManualActivationRule_0ehcqoy">
@@ -42,102 +137,259 @@
             </cmmn:manualActivationRule>
           </cmmn:itemControl>
         </cmmn:planItem>
-        <cmmn:planItem id="PlanItem_0oggb1b" definitionRef="HumanTask_12iixnz">
-          <cmmn:itemControl id="PlanItemControl_0df87yw">
-            <cmmn:manualActivationRule id="ManualActivationRule_0ui5wn8">
-              <cmmn:condition id="Expression_10hwpee">${true}</cmmn:condition>
+        <cmmn:planItem id="PlanItem_SaveAsDraft" definitionRef="HumanTask_SaveAsDraft">
+          <cmmn:itemControl id="PlanItemControl_0hxvpcx">
+            <cmmn:manualActivationRule id="ManualActivationRule_01ilfj2">
+              <cmmn:condition id="Expression_0qdurk2">${true}</cmmn:condition>
             </cmmn:manualActivationRule>
           </cmmn:itemControl>
         </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_SubmitNew" definitionRef="HumanTask_SubmitNew">
+          <cmmn:itemControl id="PlanItemControl_0box0wj">
+            <cmmn:manualActivationRule id="ManualActivationRule_1kgjz5q">
+              <cmmn:condition id="Expression_1cfuevy">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:humanTask id="HumanTask_CreateContent" name="Create Content" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.CreateContentAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
         <cmmn:humanTask id="HumanTask_PublishNew" name="Publish" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
           <cmmn:extensionElements>
             <vce:stageCompletionTask />
-            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_New&#39;, &#39;PlanItem_CheckPublish&#39;)}" />
           </cmmn:extensionElements>
         </cmmn:humanTask>
-        <cmmn:humanTask id="HumanTask_12iixnz" name="Active Task" />
-      </cmmn:stage>
-      <cmmn:stage id="Stage_CheckPublish" name="Check Publish" autoComplete="true">
-        <cmmn:extensionElements>
-          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_CheckPublish&#39;, &#39;&#39;)}" />
-        </cmmn:extensionElements>
-        <cmmn:planItem id="PlanItem_GoToPublish" definitionRef="ProcessTask_GoToPublish">
-          <cmmn:itemControl id="PlanItemControl_12srl7f">
-            <cmmn:manualActivationRule id="ManualActivationRule_0vy1kex">
-              <cmmn:condition id="Expression_07fi1qi">${false}</cmmn:condition>
-            </cmmn:manualActivationRule>
-          </cmmn:itemControl>
-          <cmmn:entryCriterion id="EntryCriterion_0ca1qkp" sentryRef="Sentry_0sjihw9" />
-        </cmmn:planItem>
-        <cmmn:sentry id="Sentry_0sjihw9">
-          <cmmn:ifPart id="IfPart_0r48uy5">
-            <cmmn:condition id="Expression_04pnhq3">${shouldPublishImmediately}</cmmn:condition>
-          </cmmn:ifPart>
-        </cmmn:sentry>
-        <cmmn:processTask id="ProcessTask_GoToPublish" name="GoTo Publish" processRef="No_Op">
+        <cmmn:humanTask id="HumanTask_SaveAsDraft" name="Save As Draft" vce:displayOrder="1" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
           <cmmn:extensionElements>
             <vce:stageCompletionTask />
-            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_CheckPublish&#39;, &#39;CasePlanModel_1&#39;)}" />
           </cmmn:extensionElements>
-        </cmmn:processTask>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_SubmitNew" name="Submit For Review" vce:displayOrder="2" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_New&#39;, &#39;PlanItem_ReviewStage&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
       </cmmn:stage>
-      <cmmn:exitCriterion id="ExitCriterion_01dcayn" sentryRef="Sentry_1kwrtib" />
+      <cmmn:stage id="Stage_Rework" name="Rework" autoComplete="true">
+        <cmmn:extensionElements>
+          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_Rework&#39;, &#39;&#39;)}" />
+        </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_Rework" name="Rework" definitionRef="HumanTask_Rework">
+          <cmmn:itemControl id="PlanItemControl_1qw9kw2">
+            <cmmn:manualActivationRule id="ManualActivationRule_0bg1j5j">
+              <cmmn:condition id="Expression_0fkigox">${false}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_SubmitRework" definitionRef="HumanTask_SubmitRework">
+          <cmmn:itemControl id="PlanItemControl_0prxzq8">
+            <cmmn:manualActivationRule id="ManualActivationRule_02etda2">
+              <cmmn:condition id="Expression_0nzpc9s">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ReworkMilestone" definitionRef="Milestone_Rework" />
+        <cmmn:humanTask id="HumanTask_Rework" name="Rework" camunda:candidateGroups="${&#34;johnny&#34;}" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ViewContentAction" />
+        <cmmn:humanTask id="HumanTask_SubmitRework" name="Submit For Review" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_Rework&#39;, &#39;PlanItem_ReviewStage&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:milestone id="Milestone_Rework" name="Rework" />
+      </cmmn:stage>
+      <cmmn:stage id="Stage_ContentReview" name="Content Review" autoComplete="true">
+        <cmmn:extensionElements>
+          <camunda:caseExecutionListener event="create" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_ContentReview&#39;, &#39;&#39;)}" />
+        </cmmn:extensionElements>
+        <cmmn:planItem id="PlanItem_Review" definitionRef="HumanTask_Review">
+          <cmmn:itemControl id="PlanItemControl_0h8d0ky">
+            <cmmn:manualActivationRule id="ManualActivationRule_1qnv7vg">
+              <cmmn:condition id="Expression_0vj2omj">${false}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_RejectReview" definitionRef="HumanTask_RejectReview">
+          <cmmn:itemControl id="PlanItemControl_087ckaf">
+            <cmmn:manualActivationRule id="ManualActivationRule_1h7hxb6">
+              <cmmn:condition id="Expression_0uou2vk">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ApproveReview" definitionRef="HumanTask_ApproveReview">
+          <cmmn:itemControl id="PlanItemControl_0ozhrec">
+            <cmmn:manualActivationRule id="ManualActivationRule_1a50y5e">
+              <cmmn:condition id="Expression_04axj3a">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:planItem id="PlanItem_ContentReviewMilestone" definitionRef="Milestone_ContentReview" />
+        <cmmn:humanTask id="HumanTask_Review" name="Review" camunda:candidateGroups="QueueED:Content Review Queue" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ViewContentAction" />
+        <cmmn:humanTask id="HumanTask_RejectReview" name="Reject" vce:displayOrder="3" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_ContentReview&#39;, &#39;PlanItem_ReworkStage&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:humanTask id="HumanTask_ApproveReview" name="Approve" vce:displayOrder="4" vce:formId="AddKnowContentCase.Implementation.ContentAuthoringCaseActions.ChangeAuthoringStateAction">
+          <cmmn:extensionElements>
+            <vce:stageCompletionTask />
+            <camunda:caseExecutionListener event="complete" expression="${caseExecution.setVariable(&#39;_stageCompletion_Stage_ContentReview&#39;, &#39;PlanItem_ManagerReview&#39;)}" />
+          </cmmn:extensionElements>
+        </cmmn:humanTask>
+        <cmmn:milestone id="Milestone_ContentReview" name="Content Review" />
+      </cmmn:stage>
     </cmmn:casePlanModel>
   </cmmn:case>
   <cmmndi:CMMNDI>
     <cmmndi:CMMNDiagram id="_5a66685b-5f57-4e2f-b1d1-acca4fae04b2">
       <cmmndi:Size xsi:type="dc:Dimension" width="500" height="500" />
       <cmmndi:CMMNShape id="DI_CasePlanModel_1" cmmnElementRef="CasePlanModel_1">
-        <dc:Bounds x="322" y="361" width="1457" height="488" />
+        <dc:Bounds x="-108" y="-141" width="1682" height="1280" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1i2uyux_di" cmmnElementRef="PlanItem_ManagerReview">
+        <dc:Bounds x="988" y="157" width="381" height="401" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1ji1b01_di" cmmnElementRef="PlanItem_ManagerReview_Reject">
+        <dc:Bounds x="1244" y="370" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_029qkun_di" cmmnElementRef="PlanItem_ManagerReview_Approve">
+        <dc:Bounds x="1244" y="278" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1ol78pz_di" cmmnElementRef="PlanItem_ManagerReview_Review">
+        <dc:Bounds x="1008" y="315" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_11us4mi_di" cmmnElementRef="EntryCriterion_11us4mi">
+        <dc:Bounds x="978" y="291" width="20" height="28" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNShape id="PlanItem_004dsfe_di" cmmnElementRef="PlanItem_NewStage">
-        <dc:Bounds x="417.0151098901099" y="517" width="430.9848901098901" height="189" />
+        <dc:Bounds x="35" y="-115" width="396" height="306" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1p4g8lb_di" cmmnElementRef="PlanItem_CreateContent">
+        <dc:Bounds x="129" y="-1" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
       <cmmndi:CMMNShape id="PlanItem_05uwxg8_di" cmmnElementRef="PlanItem_PublishNew">
-        <dc:Bounds x="636" y="563" width="100" height="80" />
+        <dc:Bounds x="298" y="-94" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_10sa6fk_di" cmmnElementRef="PlanItem_CheckPublish">
-        <dc:Bounds x="1100" y="509" width="384" height="226" />
+      <cmmndi:CMMNShape id="PlanItem_1jj6obm_di" cmmnElementRef="PlanItem_SaveAsDraft">
+        <dc:Bounds x="298" y="91" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_08n6k31_di" cmmnElementRef="PlanItem_GoToPublish">
-        <dc:Bounds x="1238" y="557" width="100" height="80" />
+      <cmmndi:CMMNShape id="PlanItem_15tb4d2_di" cmmnElementRef="PlanItem_SubmitNew">
+        <dc:Bounds x="298" y="-1" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNEdge id="PlanItemOnPart_0iunp1h_di" cmmnElementRef="PlanItemOnPart_0iunp1h" targetCMMNElementRef="ExitCriterion_01dcayn" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="1484" y="597" />
-        <di:waypoint xsi:type="dc:Point" x="1627" y="597" />
-        <di:waypoint xsi:type="dc:Point" x="1627" y="567" />
-        <di:waypoint xsi:type="dc:Point" x="1769" y="567" />
+      <cmmndi:CMMNShape id="PlanItem_1qxpujo_di" cmmnElementRef="PlanItem_ReworkStage">
+        <dc:Bounds x="28" y="588" width="376" height="285" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0os9l86_di" cmmnElementRef="PlanItem_Rework">
+        <dc:Bounds x="49" y="627" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0hevtnl_di" cmmnElementRef="PlanItem_SubmitRework">
+        <dc:Bounds x="271" y="700" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_0e6oe5f_di" cmmnElementRef="EntryCriterion_0e6oe5f">
+        <dc:Bounds x="18" y="722" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="EntryCriterion_06rvkgv_di" cmmnElementRef="EntryCriterion_06rvkgv">
+        <dc:Bounds x="18" y="785" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_0k6j5k3_di" cmmnElementRef="PlanItemOnPart_0k6j5k3" targetCMMNElementRef="EntryCriterion_06rvkgv" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="1344" y="411" />
+        <di:waypoint xsi:type="dc:Point" x="1478" y="411" />
+        <di:waypoint xsi:type="dc:Point" x="1478" y="934" />
+        <di:waypoint xsi:type="dc:Point" x="-70" y="934" />
+        <di:waypoint xsi:type="dc:Point" x="-70" y="799" />
+        <di:waypoint xsi:type="dc:Point" x="18" y="799" />
         <cmmndi:CMMNLabel>
-          <dc:Bounds x="1554" y="568" width="90" height="20" />
+          <dc:Bounds x="1364" y="388" width="90" height="20" />
         </cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>
-      <cmmndi:CMMNShape id="EntryCriterion_08kosz6_di" cmmnElementRef="EntryCriterion_08kosz6">
-        <dc:Bounds x="1090" y="580" width="20" height="28" />
+      <cmmndi:CMMNShape id="PlanItem_09k1qnh_di" cmmnElementRef="PlanItem_ReviewStage">
+        <dc:Bounds x="549" y="160" width="347" height="386" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNEdge id="PlanItemOnPart_04gq89e_di" cmmnElementRef="PlanItemOnPart_04gq89e" targetCMMNElementRef="EntryCriterion_08kosz6" isStandardEventVisible="true">
-        <di:waypoint xsi:type="dc:Point" x="848" y="595" />
-        <di:waypoint xsi:type="dc:Point" x="903" y="595" />
-        <di:waypoint xsi:type="dc:Point" x="1090" y="594" />
+      <cmmndi:CMMNShape id="PlanItem_0iid7bn_di" cmmnElementRef="PlanItem_Review">
+        <dc:Bounds x="564" y="310" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0waz7lk_di" cmmnElementRef="PlanItem_RejectReview">
+        <dc:Bounds x="775" y="355" width="100" height="80" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_10hp6v4_di" cmmnElementRef="PlanItemOnPart_10hp6v4" targetCMMNElementRef="EntryCriterion_0e6oe5f" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="875" y="395" />
+        <di:waypoint xsi:type="dc:Point" x="970" y="395" />
+        <di:waypoint xsi:type="dc:Point" x="970" y="891" />
+        <di:waypoint xsi:type="dc:Point" x="-33" y="891" />
+        <di:waypoint xsi:type="dc:Point" x="-33" y="736" />
+        <di:waypoint xsi:type="dc:Point" x="18" y="736" />
         <cmmndi:CMMNLabel>
-          <dc:Bounds x="913" y="576" width="90" height="20" />
+          <dc:Bounds x="886" y="376" width="90" height="20" />
         </cmmndi:CMMNLabel>
       </cmmndi:CMMNEdge>
-      <cmmndi:CMMNShape id="ExitCriterion_01dcayn_di" cmmnElementRef="ExitCriterion_01dcayn">
-        <dc:Bounds x="1769" y="551" width="20" height="28" />
+      <cmmndi:CMMNShape id="PlanItem_0daqpvn_di" cmmnElementRef="PlanItem_ApproveReview">
+        <dc:Bounds x="775" y="266" width="100" height="80" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="EntryCriterion_0ca1qkp_di" cmmnElementRef="EntryCriterion_0ca1qkp">
-        <dc:Bounds x="1228" y="588" width="20" height="28" />
+      <cmmndi:CMMNEdge id="PlanItemOnPart_131phwc_di" cmmnElementRef="PlanItemOnPart_131phwc" targetCMMNElementRef="EntryCriterion_11us4mi" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="875" y="306" />
+        <di:waypoint xsi:type="dc:Point" x="978" y="305" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="885" y="281" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="EntryCriterion_0w98wp7_di" cmmnElementRef="EntryCriterion_0w98wp7">
+        <dc:Bounds x="609" y="532" width="20" height="28" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
-      <cmmndi:CMMNShape id="PlanItem_1dohhni_di" cmmnElementRef="PlanItem_0oggb1b">
-        <dc:Bounds x="485" y="563" width="100" height="80" />
+      <cmmndi:CMMNEdge id="PlanItemOnPart_1mm6c2p_di" cmmnElementRef="PlanItemOnPart_1mm6c2p" targetCMMNElementRef="EntryCriterion_0w98wp7" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="371" y="740" />
+        <di:waypoint xsi:type="dc:Point" x="619" y="740" />
+        <di:waypoint xsi:type="dc:Point" x="619" y="560" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="392" y="722" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="EntryCriterion_0y8bda2_di" cmmnElementRef="EntryCriterion_0y8bda2">
+        <dc:Bounds x="667" y="146" width="20" height="28" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNEdge id="PlanItemOnPart_1xkmdg3_di" cmmnElementRef="PlanItemOnPart_1xkmdg3" targetCMMNElementRef="EntryCriterion_0y8bda2" isStandardEventVisible="true">
+        <di:waypoint xsi:type="dc:Point" x="398" y="39" />
+        <di:waypoint xsi:type="dc:Point" x="677" y="39" />
+        <di:waypoint xsi:type="dc:Point" x="677" y="146" />
+        <cmmndi:CMMNLabel>
+          <dc:Bounds x="429" y="11" width="90" height="20" />
+        </cmmndi:CMMNLabel>
+      </cmmndi:CMMNEdge>
+      <cmmndi:CMMNShape id="PlanItem_1o9soje_di" cmmnElementRef="PlanItem_ReworkMilestone">
+        <dc:Bounds x="158" y="616" width="100" height="40" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_1edehud_di" cmmnElementRef="PlanItem_ContentReviewMilestone">
+        <dc:Bounds x="595" y="201" width="100" height="40" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="PlanItem_0apudgq_di" cmmnElementRef="PlanItem_ManagerReviewMilestone">
+        <dc:Bounds x="1008" y="197" width="100" height="40" />
         <cmmndi:CMMNLabel />
       </cmmndi:CMMNShape>
     </cmmndi:CMMNDiagram>

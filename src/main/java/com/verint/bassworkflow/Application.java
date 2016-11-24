@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.InputStream;
+import java.util.List;
 
 @SpringBootApplication
 @EnableTransactionManagement
@@ -23,21 +24,69 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
+        CaseInstance caseInstance = setUp();
+        if (args.length != 0 && args[0].equals("sendDirectlyForManagerReview")) {
+            moveStraightToManagerReview(caseInstance);
+        } else {
+            moveToManagerReviewAfterSendingForRework(caseInstance);
+        }
+    }
+
+    private static CaseInstance setUp() {
         processEngine = createProcessEngine();
 
         // deploy the necessary definitions
         deployCaseDefinition();
-        deployNoOpProcess();
 
-        CaseInstance caseInstance = createCaseInstance();
+        return createCaseInstance();
+    }
 
-        // set the "shouldPublishImmediately" variable
-        setVariable(caseInstance);
-
+    private static void moveToManagerReviewAfterSendingForRework(CaseInstance caseInstance) {
         // Start in the new stage, enable the Publish task
-        enablePublishTask(caseInstance);
-        completePublishTask();
-        completeNewStage();
+        enableTask(caseInstance, "PlanItem_SubmitNew");
+        completeTask("PlanItem_SubmitNew");
+        completeStage("PlanItem_NewStage");
+
+        // The case will have moved to the "Content Review" stage.
+        // From here we will reject and move to rework
+        enableTask(caseInstance, "PlanItem_RejectReview");
+        completeTask("PlanItem_RejectReview");
+        completeTask("PlanItem_Review");
+
+        // The case will now be in the "Rework" stage. We will submit for review again
+        enableTask(caseInstance, "PlanItem_SubmitRework");
+        completeTask("PlanItem_SubmitRework");
+        completeTask("PlanItem_Rework");
+
+        // The case will now be back in the "Content Review" stage. This time we will Approve
+        enableTask(caseInstance, "PlanItem_ApproveReview");
+        completeTask("PlanItem_ApproveReview");
+        completeTask("PlanItem_Review");
+
+        // An instance of the the "Manager Review" stage should become active. There should be one active Task (Review) and two enabled ones (Approve/Reject)
+        List<Task> active = processEngine.getTaskService().createTaskQuery().caseInstanceId(caseInstance.getId()).list();
+        System.out.println("There are " + active.size() + " active Tasks");
+        active.stream()
+                .forEach(task -> System.out.println("Name = " + task.getTaskDefinitionKey()));
+    }
+
+    private static void moveStraightToManagerReview(CaseInstance caseInstance) {
+        // Start in the new stage, enable the Publish task
+        enableTask(caseInstance, "PlanItem_SubmitNew");
+        completeTask("PlanItem_SubmitNew");
+        completeStage("PlanItem_NewStage");
+
+        // The case will have moved to the "Content Review" stage.
+        // From here we will approve and move straight to "Manager Review"
+        enableTask(caseInstance, "PlanItem_ApproveReview");
+        completeTask("PlanItem_ApproveReview");
+        completeTask("PlanItem_Review");
+
+        // An instance of the the "Manager Review" stage should become active. There should be one active Task (Review) and two enabled ones (Approve/Reject)
+        List<Task> active = processEngine.getTaskService().createTaskQuery().caseInstanceId(caseInstance.getId()).list();
+        System.out.println("There are " + active.size() + " active Tasks");
+        active.stream()
+                .forEach(task -> System.out.println("Name = " + task.getTaskDefinitionKey()));
     }
 
     private static void setVariable(CaseInstance caseInstance) {
@@ -48,22 +97,22 @@ public class Application {
         return processEngine.getCaseService().createCaseInstanceByKey("ContentAuthoring");
     }
 
-    private static void completeNewStage() {
+    private static void completeStage(String stageActivityId) {
         CaseExecution newStageExecution
-                = processEngine.getCaseService().createCaseExecutionQuery().activityId("PlanItem_NewStage").singleResult();
+                = processEngine.getCaseService().createCaseExecutionQuery().activityId(stageActivityId).singleResult();
         processEngine.getCaseService().completeCaseExecution(newStageExecution.getId());
     }
 
-    private static void completePublishTask() {
-        Task publishTask = processEngine.getTaskService().createTaskQuery().taskDefinitionKey("PlanItem_PublishNew").singleResult();
-        processEngine.getTaskService().complete(publishTask.getId());
+    private static void completeTask(String taskDefinitionKey) {
+        Task task = processEngine.getTaskService().createTaskQuery().taskDefinitionKey(taskDefinitionKey).singleResult();
+        processEngine.getTaskService().complete(task.getId());
     }
 
-    private static CaseExecution enablePublishTask(CaseInstance caseInstance) {
+    private static CaseExecution enableTask(CaseInstance caseInstance, String taskActivityId) {
         CaseExecution publishExecution = processEngine.getCaseService()
                 .createCaseExecutionQuery()
                 .caseInstanceId(caseInstance.getId())
-                .activityId("PlanItem_PublishNew").singleResult();
+                .activityId(taskActivityId).singleResult();
 
         processEngine.getCaseService().manuallyStartCaseExecution(publishExecution.getId());
         return publishExecution;
